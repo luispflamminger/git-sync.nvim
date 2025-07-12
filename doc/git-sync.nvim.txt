@@ -1,0 +1,164 @@
+*git-sync.nvim.txt*        For Neovim >= 0.7.0       Last change: 2025 July 12
+
+==============================================================================
+Table of Contents                            *git-sync.nvim-table-of-contents*
+
+1. git-sync.nvim                                 |git-sync.nvim-git-sync.nvim|
+  - Features                            |git-sync.nvim-git-sync.nvim-features|
+  - Requirements & Installation|git-sync.nvim-git-sync.nvim-requirements-&-installation|
+  - Configuration                  |git-sync.nvim-git-sync.nvim-configuration|
+  - Usage                                  |git-sync.nvim-git-sync.nvim-usage|
+  - Troubleshooting              |git-sync.nvim-git-sync.nvim-troubleshooting|
+2. Links                                                 |git-sync.nvim-links|
+
+==============================================================================
+1. git-sync.nvim                                 *git-sync.nvim-git-sync.nvim*
+
+<https://api.reuse.software/info/github.com/luispflamminger/git-sync.nvim>
+<LICENSES/Apache-2.0.txt> <https://neovim.io>
+
+A Neovim plugin for automatic git repository synchronization with configurable
+intervals and repositories.
+
+
+FEATURES                                *git-sync.nvim-git-sync.nvim-features*
+
+- **Automatic periodic sync** - Sync configured repositories at set intervals
+- **Manual sync command** - `:GitSync` for on-demand synchronization
+- **Multi-repository support** - Configure multiple repositories with different settings
+- **Smart change detection** - Only syncs when there are actual changes
+- **Configurable notifications** - Silent, normal, or error-only notification modes
+- **Configurable commit messages** - Customize commit messages with dynamic variables
+
+
+HOW IT WORKS ~
+
+The plugin automatically: 1. Detects changes in your configured repositories 2.
+Adds and commits changes with your custom message template 3. Pulls latest
+changes from remote 4. Pushes your commits to remote
+
+If you open up a repository configured for sync in Neovim, sync is triggered on
+startup and at configured intervals. Note that sync is only enabled if
+`vim.fn.getcwd()` matches a path in set in `repos`.
+
+
+REQUIREMENTS & INSTALLATION*git-sync.nvim-git-sync.nvim-requirements-&-installation*
+
+**Requirements:** - Neovim >= 0.7.0 - git
+
+**Installation with lazy.nvim:**
+
+>lua
+    {
+        "luispflamminger/git-sync.nvim",
+        opts = {
+            repos = {
+                {
+                    path = "~/personal-notes",
+                    sync_interval = 5, -- sync every 5 minutes
+                    commit_template = "[{hostname}] vault sync: {timestamp}",
+                }
+            }
+        }
+    }
+<
+
+**Manual setup:**
+
+>lua
+    require("git-sync").setup({
+        repos = {
+            {
+                path = "~/personal-notes",
+                sync_interval = 5,
+                commit_template = "[{hostname}] vault sync: {timestamp}",
+            }
+        }
+    })
+<
+
+
+CONFIGURATION                      *git-sync.nvim-git-sync.nvim-configuration*
+
+Complete configuration with all available options:
+
+>lua
+    require("git-sync").setup({
+        repos = {
+            {
+                path = "~/personal-notes",              -- Path to git repository (required)
+                sync_interval = 5,                     -- Sync interval in minutes (default: 5, set to 0 to disable)
+                commit_template = "[{hostname}] vault sync: {timestamp}",  -- Commit message template
+                auto_pull = true,                      -- Pull before pushing (default: true)
+                auto_push = true,                      -- Push after committing (default: true)
+            },
+            {
+                path = "~/documents", 
+                sync_interval = 0,                     -- Manual sync only
+                commit_template = "docs update: {timestamp}",
+                auto_pull = true,
+                auto_push = false,                     -- Commit but don't push
+            }
+        },
+        
+        notifications = {
+            level = "normal",                          -- "silent", "normal", "on_error_only" (default: "normal")
+        },
+        
+        git = {
+            add_all = true,                           -- Add all files vs only tracked files (default: true)
+            pull_before_push = true,                  -- Pull before pushing (default: true)
+            handle_conflicts = "pause",               -- "pause", "skip", "notify" (default: "pause")
+        }
+    })
+<
+
+
+USAGE                                      *git-sync.nvim-git-sync.nvim-usage*
+
+
+COMMANDS ~
+
+**:GitSync** - Manually trigger sync for the current repository if it’s
+configured for syncing.
+
+
+TEMPLATE VARIABLES ~
+
+Commit message templates support these variables:
+
+- **{hostname}** - Current machine hostname
+- **{timestamp}** - Current date and time (YYYY-MM-DD HH:MM:SS format)
+
+**Example:**
+
+>lua
+    commit_template = "[{hostname}] vault sync: {timestamp}"
+    -- Results in: "[macbook] vault sync: 2024-01-15 14:30:22"
+<
+
+
+NOTIFICATION LEVELS ~
+
+- **silent** - No notifications shown
+- **normal** - Standard success/error notifications (default)
+- **on_error_only** - Only show error notifications, suppress success messages
+
+
+TROUBLESHOOTING                  *git-sync.nvim-git-sync.nvim-troubleshooting*
+
+- Run `:checkhealth git-sync` for diagnostics including plugin configuration, repository status, and git connectivity.
+- Verify that your repository is set up in `repos.path`
+- Ensure you open the exact repository root directory in Neovim. If you open a subdirectory within a configured repo, sync will not be triggered.
+- Verify that git is working manually with `git pull` and `git push`
+
+==============================================================================
+2. Links                                                 *git-sync.nvim-links*
+
+1. *REUSE status*: https://api.reuse.software/badge/github.com/luispflamminger/git-sync.nvim
+2. *License*: https://img.shields.io/github/license/luispflamminger/git-sync.nvim
+3. *Neovim*: https://img.shields.io/badge/Neovim-0.7.0+-brightgreen.svg
+
+Generated by panvimdoc <https://github.com/kdheepak/panvimdoc>
+
+vim:tw=78:ts=8:noet:ft=help:norl:
