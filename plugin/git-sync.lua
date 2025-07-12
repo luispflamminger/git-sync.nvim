@@ -1,3 +1,7 @@
+-- SPDX-FileCopyrightText: 2025 Luis Pfamminger
+--
+-- SPDX-License-Identifier: Apache-2.0
+
 if vim.g.loaded_git_sync then
     return
 end

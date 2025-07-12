@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2025 Luis Pfamminger
+
+SPDX-License-Identifier: Apache-2.0
+-->
+
 # git-sync.nvim
 
 A Neovim plugin for automatic git repository synchronization with configurable intervals and repositories.

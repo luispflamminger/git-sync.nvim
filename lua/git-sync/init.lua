@@ -1,3 +1,7 @@
+-- SPDX-FileCopyrightText: 2025 Luis Pfamminger
+--
+-- SPDX-License-Identifier: Apache-2.0
+
 local config = require("git-sync.config")
 local git = require("git-sync.git")
 
