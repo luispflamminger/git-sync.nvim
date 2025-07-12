@@ -7,7 +7,7 @@ SPDX-License-Identifier: Apache-2.0
 # git-sync.nvim
 
 [![REUSE status](https://api.reuse.software/badge/github.com/luispflamminger/git-sync.nvim)](https://api.reuse.software/info/github.com/luispflamminger/git-sync.nvim)
-[![Neovim](https://img.shields.io/badge/Neovim-0.7.0+-brightgreen.svg)](https://neovim.io)
+[![Neovim](https://img.shields.io/badge/Neovim-0.8.0+-brightgreen.svg)](https://neovim.io)
 
 A Neovim plugin for automatic git repository synchronization with configurable intervals and repositories.
 
@@ -34,7 +34,7 @@ Note that sync is only enabled if `vim.fn.getcwd()` matches a path in set in `re
 ## Requirements & Installation
 
 **Requirements:**
-- Neovim >= 0.7.0
+- Neovim >= 0.8.0
 - git
 
 **Installation with lazy.nvim:**

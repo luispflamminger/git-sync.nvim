@@ -27,7 +27,7 @@ end
 
 local function check_neovim_version()
     local version = vim.version()
-    local required = { 0, 7, 0 }
+    local required = { 0, 8, 0 }
 
     if version.major > required[1] or
         (version.major == required[1] and version.minor > required[2]) or
