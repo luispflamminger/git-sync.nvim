@@ -8,8 +8,8 @@ local timers = {}
 local function sync_repo()
     local cwd = vim.fn.getcwd()
     local should_sync, repo_config = config.should_sync_repo(cwd)
-    
-    if not should_sync then
+
+    if not should_sync or not repo_config then
         return
     end
 
@@ -32,7 +32,7 @@ end
 local function setup_timers()
     for _, repo in ipairs(config.get_watched_repos()) do
         if repo.sync_interval > 0 then
-            local timer = vim.loop.new_timer()
+            local timer = (vim.uv or vim.loop).new_timer()
             timer:start(
                 repo.sync_interval * 60 * 1000,
                 repo.sync_interval * 60 * 1000,
@@ -58,6 +58,12 @@ local function setup_commands()
 end
 
 function M.setup(user_config)
+    -- Prevent duplicate setup
+    if vim.g.git_autosync_setup_done then
+        return
+    end
+    vim.g.git_autosync_setup_done = 1
+    
     config.setup(user_config)
     setup_autocommands()
     setup_timers()

@@ -10,12 +10,12 @@ M.defaults = {
             auto_push = true,
         }
     },
-    
+
     notifications = {
         level = "normal",
         on_error_only = false,
     },
-    
+
     git = {
         add_all = true,
         pull_before_push = true,
