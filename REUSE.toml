@@ -1,0 +1,10 @@
+# SPDX-FileCopyrightText: 2025 Luis Pfamminger
+#
+# SPDX-License-Identifier: Apache-2.0
+
+version = 1
+
+[[annotations]]
+path = "doc/git-sync.nvim.txt"
+SPDX-FileCopyrightText = "2025 Luis Pfamminger"
+SPDX-License-Identifier = "Apache-2.0"
