@@ -5,7 +5,12 @@
 local config = require("git-sync.config")
 local git = require("git-sync.git")
 
-local M = {}
+local M = {
+    _NAME = "git-sync.nvim",
+    _VERSION = "1.0.0",
+    _DESCRIPTION = "Automatic git repository synchronization for Neovim",
+    _URL = "https://github.com/luispflamminger/git-sync.nvim",
+}
 
 local timers = {}
 
