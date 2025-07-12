@@ -45,8 +45,7 @@ require("git-autosync").setup({
     },
     
     notifications = {
-        level = "normal", -- "silent", "normal", "verbose"
-        on_error_only = false,
+        level = "normal", -- "silent", "normal", "on_error_only"
     },
     
     git = {
@@ -66,6 +65,12 @@ require("git-autosync").setup({
 Commit message templates support these variables:
 - `{hostname}` - Current machine hostname
 - `{timestamp}` - Current date and time
+
+## Notification Levels
+
+- `silent` - No notifications shown
+- `normal` - Standard success/error notifications (default)
+- `on_error_only` - Only show error notifications, suppress success messages
 
 ## Requirements
 

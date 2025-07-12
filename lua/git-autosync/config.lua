@@ -12,8 +12,7 @@ M.defaults = {
     },
 
     notifications = {
-        level = "normal",
-        on_error_only = false,
+        level = "normal", -- "silent", "normal", "on_error_only"
     },
 
     git = {

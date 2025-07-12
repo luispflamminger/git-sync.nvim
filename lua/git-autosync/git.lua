@@ -1,9 +1,6 @@
-local M = {}
+local notifications = require("git-autosync.notifications")
 
-local function notify(msg, is_error)
-    local level = is_error and vim.log.levels.ERROR or vim.log.levels.INFO
-    vim.notify("[Git Sync] " .. msg, level)
-end
+local M = {}
 
 function M.run_command(cmd, callback)
     local stdout_lines = {}
@@ -84,9 +81,9 @@ function M.sync_repository(repo_path, commit_template)
     M.check_repo_status(function(result)
         if not result.success then
             if result.status_type == "not_a_repo" then
-                notify("Skipping " .. repo_name .. " - not a git repository", true)
+                notifications.notify("Skipping " .. repo_name .. " - not a git repository", true)
             elseif result.status_type == "no_remote" then
-                notify("Skipping " .. repo_name .. " - no remote configured", true)
+                notifications.notify("Skipping " .. repo_name .. " - no remote configured", true)
             end
             return
         end
@@ -99,9 +96,9 @@ function M.sync_repository(repo_path, commit_template)
                     if pull_result.success and pull_result.stdout:match("Already up to date") then
                         -- Silent - no notification for "already up to date"
                     elseif pull_result.success then
-                        notify("✓ Pulled updates for " .. repo_name)
+                        notifications.notify("✓ Pulled updates for " .. repo_name)
                     else
-                        notify("Failed to pull: " .. pull_result.stderr, true)
+                        notifications.notify("Failed to pull: " .. pull_result.stderr, true)
                     end
                 end)
                 return
@@ -118,33 +115,33 @@ function M.sync_repository(repo_path, commit_template)
 
                     M.commit(commit_msg, function(commit_result)
                         if commit_result.success then
-                            notify("✓ Committed " .. repo_name)
+                            notifications.notify("✓ Committed " .. repo_name)
                         elseif commit_result.stderr:match("nothing to commit") then
                             -- This is fine, just continue to pull
                         else
-                            notify("Failed to commit: " .. commit_result.stderr, true)
+                            notifications.notify("Failed to commit: " .. commit_result.stderr, true)
                             return
                         end
 
                         M.pull(function(pull_result)
                             if pull_result.success then
-                                notify("✓ Pulled " .. repo_name)
+                                notifications.notify("✓ Pulled " .. repo_name)
                             else
-                                notify("Failed to pull: " .. pull_result.stderr, true)
+                                notifications.notify("Failed to pull: " .. pull_result.stderr, true)
                                 return
                             end
 
                             M.push(function(push_result)
                                 if push_result.success then
-                                    notify("✓ Pushed " .. repo_name)
+                                    notifications.notify("✓ Pushed " .. repo_name)
                                 else
-                                    notify("Failed to push: " .. push_result.stderr, true)
+                                    notifications.notify("Failed to push: " .. push_result.stderr, true)
                                 end
                             end)
                         end)
                     end)
                 else
-                    notify("Failed to add files: " .. add_result.stderr, true)
+                    notifications.notify("Failed to add files: " .. add_result.stderr, true)
                 end
             end)
         end)
