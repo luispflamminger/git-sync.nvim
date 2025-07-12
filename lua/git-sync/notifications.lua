@@ -1,7 +1,7 @@
 local M = {}
 
 function M.notify(msg, is_error)
-    local config = require("git-autosync.config")
+    local config = require("git-sync.config")
     local settings = config.options.notifications or {}
     local level_setting = settings.level or "normal"
 

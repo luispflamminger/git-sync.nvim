@@ -1,5 +1,5 @@
-local config = require("git-autosync.config")
-local git = require("git-autosync.git")
+local config = require("git-sync.config")
+local git = require("git-sync.git")
 
 local M = {}
 
@@ -19,7 +19,7 @@ local function sync_repo()
 end
 
 local function setup_autocommands()
-    local group = vim.api.nvim_create_augroup("GitAutoSync", { clear = true })
+    local group = vim.api.nvim_create_augroup("GitSync", { clear = true })
 
     vim.api.nvim_create_autocmd("VimEnter", {
         group = group,
@@ -59,10 +59,10 @@ end
 
 function M.setup(user_config)
     -- Prevent duplicate setup
-    if vim.g.git_autosync_setup_done then
+    if vim.g.git_sync_setup_done then
         return
     end
-    vim.g.git_autosync_setup_done = 1
+    vim.g.git_sync_setup_done = 1
     
     config.setup(user_config)
     setup_autocommands()

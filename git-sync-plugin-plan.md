@@ -124,11 +124,13 @@ require("git-autosync").setup({
 ## Current Plugin Structure
 ```
 git-sync.nvim/
-├── lua/git-autosync/
+├── lua/git-sync/
 │   ├── init.lua          # ✅ Main setup and public API
 │   ├── config.lua        # ✅ Configuration management
-│   └── git.lua          # ✅ Git operations
-├── plugin/git-autosync.lua # ✅ Plugin entry point
+│   ├── git.lua          # ✅ Git operations
+│   ├── notifications.lua # ✅ Notification system  
+│   └── health.lua       # ✅ Health checks
+├── plugin/git-sync.lua  # ✅ Plugin entry point
 ├── README.md            # ✅ Installation guide
 └── git-sync-plugin-plan.md # Development plan
 ```
@@ -149,7 +151,7 @@ For local testing, add to lazy.nvim config:
 ```lua
 {
     dir = "/Users/luisp/dev/personal/git-sync.nvim",
-    name = "git-autosync.nvim",
+    name = "git-sync.nvim",
     opts = { ... }
 }
 ```

@@ -37,7 +37,7 @@ local function check_neovim_version()
 end
 
 local function check_config()
-    local config = require("git-autosync.config")
+    local config = require("git-sync.config")
 
     if not config.options or vim.tbl_isempty(config.options) then
         return false, "plugin not configured - run setup() first"
@@ -52,7 +52,7 @@ local function check_config()
 end
 
 local function check_repositories()
-    local config = require("git-autosync.config")
+    local config = require("git-sync.config")
     local results = {}
 
     for _, repo in ipairs(config.get_watched_repos()) do
@@ -104,7 +104,7 @@ local function check_repositories()
 end
 
 function M.check()
-    vim.health.start("git-autosync")
+    vim.health.start("git-sync")
 
     -- Check Neovim version
     local nvim_ok, nvim_msg = check_neovim_version()
@@ -133,7 +133,7 @@ function M.check()
     end
 
     -- Check notification configuration
-    local config = require("git-autosync.config")
+    local config = require("git-sync.config")
     local notif_level = config.options.notifications and config.options.notifications.level or "normal"
     local valid_levels = { "silent", "normal", "on_error_only" }
 
@@ -145,7 +145,7 @@ function M.check()
     end
 
     -- Check if setup was called
-    if vim.g.git_autosync_setup_done then
+    if vim.g.git_sync_setup_done then
         vim.health.ok("Plugin setup completed")
     else
         vim.health.warn("Plugin setup not detected - autocommands and timers may not be active")

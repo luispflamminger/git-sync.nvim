@@ -1,4 +1,4 @@
-# git-autosync.nvim
+# git-sync.nvim
 
 A neovim plugin for automatic git repository synchronization with configurable intervals and repositories.
 
@@ -15,7 +15,7 @@ Install using your favorite plugin manager, e.g. lazy.nvim:
 
 ```lua
 {
-    "luispflamminger/git-autosync.nvim",
+    "luispflamminger/git-sync.nvim",
     opts = {
         repos = {
             {
@@ -33,7 +33,7 @@ Install using your favorite plugin manager, e.g. lazy.nvim:
 ## Full Configuration
 
 ```lua
-require("git-autosync").setup({
+require("git-sync").setup({
     repos = {
         {
             path = "~/obsidian-notes",

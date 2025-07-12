@@ -1,4 +1,4 @@
-local notifications = require("git-autosync.notifications")
+local notifications = require("git-sync.notifications")
 
 local M = {}
 
