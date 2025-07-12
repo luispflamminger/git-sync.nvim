@@ -7,7 +7,7 @@ local M = {}
 M.defaults = {
     repos = {
         {
-            path = vim.fn.expand("~/obsidian-notes"),
+            path = vim.fn.expand("~/personal-notes"),
             sync_interval = 5,
             commit_template = "[{hostname}] vault sync: {timestamp}",
             auto_pull = true,
